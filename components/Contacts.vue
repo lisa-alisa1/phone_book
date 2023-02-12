@@ -1,27 +1,44 @@
 <template>
-    <div class="contacts"> 
-        <div class="item"  v-for="(contact, index) in allContacts" :key="index">
-            <div>
-                <div>  {{ contact.username }} </div> 
-                 <div> {{ contact.phone }} </div> 
-            </div>
-            <div class="icons-block">
-                <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
-                <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
-                <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
-            </div>
-        </div> 
-        <div v-if="isShowModal">
+    <div class="contacts" > 
+        <div v-if="searchPhone">
+            <div class="item"   v-for="(contact, index) in fitletedPhones" :key="index">
+                <div>
+                    <div>  {{ contact.username }} </div> 
+                    <div> {{ contact.phone }} </div> 
+                </div>
+                <div class="icons-block">
+                    <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
+                    <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
+                    <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
+                </div>
+            </div> 
+        </div>
+
+        <div v-else>
+            <div class="item"   v-for="(contact, index) in allContacts" :key="index">
+                <div>
+                    <div>  {{ contact.username }} </div> 
+                    <div> {{ contact.phone }} </div> 
+                </div>
+                <div class="icons-block">
+                    <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
+                    <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
+                    <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
+                </div>
+            </div> 
+        </div>
+        
+        <div v-if="isShowModal"> 
             <EditContactModal @close-modal="isShowModal = false"  />
         </div>
     </div>
-   
 </template>
 
 <script>
 import EditContactModal from '../components/EditContactModal.vue'
 
 export default {
+    props: ['searchPhone'],
     components: { EditContactModal },
     data() {
         return {
@@ -32,14 +49,16 @@ export default {
         return this.$store.dispatch('fetchContacts')
     },
     computed: {
-   
         allContacts() {
             return this.$store.getters['allContacts']
         },
+        fitletedPhones() {
+          return this.allContacts.filter(contact => contact.phone.includes(this.searchPhone))
+        }
     },
 
     methods: {
-        deleteContact(id) {
+        deleteContact(id = 5) {
             return this.$store.dispatch('deleteContact', id)
         },
 

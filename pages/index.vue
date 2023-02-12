@@ -8,13 +8,8 @@
         <div class="search">
           <div>
             <input type="text" placeholder="Enter" v-model='searchPhone'>
-            <ul v-if="searchPhone" >
-              <li v-for="(contact, index) in fitletedPhones" :key="index">
-                {{contact.phone}}
-              </li>
-            </ul>
             <img class="search-img" src="../assets/img/search.svg" >
-            <img class="sort" src="../assets/img/sort.svg" @click="sort()" > 
+            <img class="sort" src="../assets/img/sort.svg" @click="sort()"> 
           </div>
           <div>
             <img class="add-user-img" src="../assets/img/add-user.svg" @click="isShowModal = true">
@@ -24,7 +19,8 @@
         <div v-if="isShowModal" >
           <AddContactModal @close-modal="isShowModal = false" />
         </div>
-        
+
+
       </div>
     </div>
 </template>
@@ -40,6 +36,10 @@ export default {
     AddContactModal,
   },
   
+  created() {
+    return this.sortDesc()
+  },
+
   data() {
     return {
       isShowModal: false,
@@ -59,29 +59,23 @@ export default {
    computed: {
         allContacts() {
             return this.$store.getters['allContacts']
-        },
-        fitletedPhones() {
-          return this.allContacts.filter(contact => contact.phone.includes(this.searchPhone))
         }
     },
     
   methods: {
-   
     sort() {
       this.sortType = !this.sortType
-      console.log('sort');
-    },
-    sortDesc() {
-      console.log('sortDesc');
-      return this.allContacts.sort((a, b) => b.date - a.date)
-     
-      
+      console.log(this.sortType);
     },
     sortAsc() {
-      console.log('sortAsc');
+      console.log('asc');
       return this.allContacts.sort((a, b) => a.date - b.date)
-      
+
     },
+    sortDesc() {
+      console.log('desc');
+      return this.allContacts.sort((a, b) => b.date - a.date)
+    }
   },
   
 }

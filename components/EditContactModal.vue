@@ -15,8 +15,7 @@
                     </div>
                    
                     <div class="button-block">
-                       
-                        <button id="add" > SAVE </button>
+                        <button id="add"  > SAVE </button>
                         <button id="close"  @click="closeModal()"> CLOSE </button>
                     </div>
                 </div>
@@ -30,7 +29,7 @@ export default {
     methods: {
         closeModal() {
             this.$emit('close-modal')
-        }
+        },
     },
     data() {
         return {

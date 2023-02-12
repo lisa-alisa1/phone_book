@@ -43,8 +43,8 @@ export default {
                 contacts.splice(index, 1)
             }
             commit('set_contacts', contacts)
+        },
 
-        }
-        
+       
     }
 }
