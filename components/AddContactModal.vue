@@ -41,7 +41,8 @@ export default {
             if (this.username !== '' && this.phone !== '') {
                 this.$store.dispatch('addContact', {
                     username: this.username,
-                    phone: this.phone
+                    phone: this.phone,
+                    date: new Date()
                 })
                 this.closeModal()
             }

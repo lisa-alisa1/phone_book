@@ -1,44 +1,50 @@
 <template>
-    <div class="contacts">
+    <div class="contacts"> 
         <div class="item"  v-for="(contact, index) in allContacts" :key="index">
             <div>
                 <div>  {{ contact.username }} </div> 
                  <div> {{ contact.phone }} </div> 
             </div>
             <div class="icons-block">
-                <img class="icons" src="../assets/img/edit.svg" style="margin-right: 28%;" @click="isShowModal = true">
+                <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
+                <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
                 <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
             </div>
-        </div>
+        </div> 
         <div v-if="isShowModal">
             <EditContactModal @close-modal="isShowModal = false"  />
         </div>
-         
     </div>
    
 </template>
 
 <script>
 import EditContactModal from '../components/EditContactModal.vue'
+
 export default {
+    components: { EditContactModal },
     data() {
         return {
-            isShowModal: false
+            isShowModal: false,
         }
     },
-    components: { EditContactModal },
     mounted() {
         return this.$store.dispatch('fetchContacts')
     },
     computed: {
+   
         allContacts() {
             return this.$store.getters['allContacts']
-        }
+        },
     },
+
     methods: {
         deleteContact(id) {
             return this.$store.dispatch('deleteContact', id)
         },
+
+        
+
     }
 }
 </script>
@@ -71,7 +77,7 @@ export default {
 }
 
 .icons-block {
-    width: 9%;
+    width: 31%;
     display: flex;
     justify-content: flex-end;
 }

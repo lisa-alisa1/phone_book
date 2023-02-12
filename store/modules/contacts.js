@@ -4,7 +4,8 @@ export default {
     },
 
     getters: {
-        allContacts: state => state.contacts
+        allContacts: state => state.contacts,
+     
     }, 
 
     mutations: {
