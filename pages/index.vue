@@ -11,20 +11,32 @@
             <img class="search-img" src="../assets/img/search.svg" >
           </div>
           <div>
-            <img  class="add-user-img" src="../assets/img/add-user.svg">
+            <img class="add-user-img" src="../assets/img/add-user.svg" @click="isShowModal = true">
           </div>
         </div>
         <Contacts />
+        <div v-if="isShowModal" >
+          <AddContactModal @close-modal="isShowModal = false" />
+        </div>
+        
       </div>
     </div>
 </template>
 
 <script>
 import Contacts from '../components/Contacts.vue';
+import AddContactModal from '../components/AddContactModal.vue'
+
 export default {
   name: 'IndexPage',
   components: {
-    Contacts
+    Contacts,
+    AddContactModal
+  },
+  data() {
+    return {
+      isShowModal: false
+    }
   }
 }
 </script>
@@ -39,6 +51,7 @@ export default {
   height: 100vh;
   
 }
+
 .logo {
   margin-bottom: 2%;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -72,8 +85,8 @@ export default {
  .search-img {
     width: 3%;
     position: absolute;
-    top: 25%;
-    right: 62%;
+    top: 22%;
+    right: 57%;
 }
 
 .add-user-img {

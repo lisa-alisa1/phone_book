@@ -1,5 +1,11 @@
 {
+  "AddContactModal": {
+    "description": "Auto imported from components/AddContactModal.vue"
+  },
   "Contacts": {
     "description": "Auto imported from components/Contacts.vue"
+  },
+  "EditContactModal": {
+    "description": "Auto imported from components/EditContactModal.vue"
   }
 }
