@@ -15,12 +15,12 @@
             <img class="add-user-img" src="../assets/img/add-user.svg" @click="isShowModal = true">
           </div>
         </div>
+
         <Contacts :sortType='sortType' :searchPhone="searchPhone"/>
+
         <div v-if="isShowModal" >
           <AddContactModal @close-modal="isShowModal = false" />
         </div>
-
-     
       </div>
     </div>
 </template>
@@ -41,28 +41,28 @@ export default {
       isShowModal: false,
       sortType: true,
       searchPhone: '',
-  
     }
   }, 
+
   watch: {
-      sortType() {
-        if(this.sortType == true) {
-          this.sortDesc()
-        } else {
-            this.sortAsc()
-        }
+    sortType() {
+      if(this.sortType == true) {
+        this.sortDesc()
+      } else {
+          this.sortAsc()
       }
+    }
   },  
+
    computed: {
-        allContacts() {
-            return this.$store.getters['allContacts']
-        }
-    },
+    allContacts() {
+        return this.$store.getters['allContacts']
+    }
+  },
     
   methods: {
     sort() {
       this.sortType = !this.sortType
-      console.log(this.sortType);
     },
     sortAsc() {
       console.log('asc');
@@ -73,30 +73,25 @@ export default {
       console.log('desc');
       return this.allContacts.sort((a, b) => b.date - a.date)
     }
-  },
-  
+  }
 }
 </script>
 
-
-<style >
+<style>
 .container {
   flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  
 }
-
 .logo {
   margin-bottom: 2%;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  
 }
 .main-block {
-  height: 70%;
-  width: 31%;
+  height: 36rem;
+  width: 31rem;
   background-color: rgba(137, 116, 90, 0.414);
   border-radius: 10px;
   padding: 1%;
@@ -116,17 +111,15 @@ export default {
 .search input {
   border: none;
   height: 2rem;
-  /* width: 125%; */
   border-radius: 5px;
   padding-left: 7px;
   position: relative;
-
 }
 
- .search-img {
-    width: 3%;
-    margin-left: -4%;
-    z-index: 0;
+.search-img {
+  width: 3%;
+  margin-left: -4%;
+  z-index: 0;
 }
 
 .add-user-img {
@@ -137,7 +130,4 @@ export default {
   height: 2rem;
   margin-left: 2%;
 }
-
-
-
 </style>

@@ -15,8 +15,8 @@
                     </div>
                    
                     <div class="button-block">
-                        <button id="add"  > SAVE </button>
-                        <button id="close"  @click="closeModal()"> CLOSE </button>
+                        <button id="add" @click="updateContact()"> SAVE </button>
+                        <button id="close"  @click="closeModal()"> CLOSE </button> 
                     </div>
                 </div>
             </div>
@@ -24,17 +24,31 @@
     </div>
 </template>
 
+
 <script>
+
 export default {
+   props: ['selectedContact'],
     methods: {
         closeModal() {
             this.$emit('close-modal')
         },
+        updateContact() {
+            if (this.username !== '' && this.phone !== '') {
+                this.$store.dispatch('updateContact', {
+                    id: this.selectedContact.id,
+                    username: this.username,
+                    phone: this.phone
+                }).then(
+                    this.closeModal()
+                )
+            }
+        },
     },
     data() {
         return {
-            username: '',
-            phone: ''
+            username: this.selectedContact.username,
+            phone: this.selectedContact.phone
         }
     }
 }

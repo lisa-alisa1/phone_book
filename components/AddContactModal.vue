@@ -47,15 +47,12 @@ export default {
                 this.closeModal()
             }
         } 
-
     }
 }
- 
 </script>
 
 
 <style scoped>
-
 div p {
     font-size: 25px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
@@ -134,5 +131,4 @@ vertical-align: middle;
     height: 6rem;
     margin-left: 31%;
 }
-
 </style>

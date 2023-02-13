@@ -15,9 +15,12 @@ export default {
     },
 
     actions: {
-        async fetchContacts({commit}) {
-           let contacts = await this.$axios.$get('https://63e3f8edc919fe386c132823.mockapi.io/user')
-           commit('set_contacts', contacts)
+         fetchContacts({commit}) {
+           this.$axios.$get(
+            'https://63e3f8edc919fe386c132823.mockapi.io/user'
+            ).then(contacts => {
+                commit('set_contacts', contacts)
+            })
         },
 
         addContact({state, commit}, newContact) {
@@ -45,6 +48,15 @@ export default {
             commit('set_contacts', contacts)
         },
 
-       
+        updateContact({commit, state}, editingContact) {
+            let contacts = state.contacts
+
+            let index = contacts.findIndex(contact => contact.id === editingContact.id);
+
+            contacts[index].username = editingContact.username
+            contacts[index].phone = editingContact.phone
+
+            commit('set_contacts', contacts)
+        }
     }
 }
