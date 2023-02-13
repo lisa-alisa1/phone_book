@@ -7,7 +7,7 @@
       <div class="main-block">
         <div class="search">
           <div>
-            <input type="text" placeholder="Enter" v-model='searchPhone'>
+            <input type="text" placeholder="Enter" v-model='searchPhone' >
             <img class="search-img" src="../assets/img/search.svg" >
             <img class="sort" src="../assets/img/sort.svg" @click="sort()"> 
           </div>
@@ -20,7 +20,7 @@
           <AddContactModal @close-modal="isShowModal = false" />
         </div>
 
-
+     
       </div>
     </div>
 </template>
@@ -36,15 +36,12 @@ export default {
     AddContactModal,
   },
   
-  created() {
-    return this.sortDesc()
-  },
-
   data() {
     return {
       isShowModal: false,
       sortType: true,
-      searchPhone: ''
+      searchPhone: '',
+  
     }
   }, 
   watch: {
@@ -141,24 +138,6 @@ export default {
   margin-left: 2%;
 }
 
-ul {
-  list-style: none;
-    background: white;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 35%;
-    position: absolute;
-    top: 60%;
-    height: min-content;
-    padding: 0;
-}
 
-li {
-  font-size: 19px;
-  margin-top: 4%;
-  padding-left: 6%;
 
-}
 </style>

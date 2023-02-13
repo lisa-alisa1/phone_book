@@ -1,36 +1,26 @@
 <template>
-    <div class="contacts" > 
-        <div v-if="searchPhone">
-            <div class="item"   v-for="(contact, index) in fitletedPhones" :key="index">
-                <div>
-                    <div>  {{ contact.username }} </div> 
-                    <div> {{ contact.phone }} </div> 
-                </div>
-                <div class="icons-block">
-                    <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
-                    <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
-                    <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
-                </div>
-            </div> 
-        </div>
-
-        <div v-else>
-            <div class="item"   v-for="(contact, index) in allContacts" :key="index">
-                <div>
-                    <div>  {{ contact.username }} </div> 
-                    <div> {{ contact.phone }} </div> 
-                </div>
-                <div class="icons-block">
-                    <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
-                    <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
-                    <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
-                </div>
-            </div> 
-        </div>
+    <div class="contacts"> 
+        <div class="item"  v-for="(contact, index) in tasksOnPage" :key="index"> 
+            <div>
+                <div>  {{ contact.username }} </div> 
+                <div> {{ contact.phone }} </div> 
+            </div>
+            <div class="icons-block">
+                <div>{{ $moment(contact.date).format('MM-DD HH:mm') }}</div>
+                <img class="icons" src="../assets/img/edit.svg" style="margin-left: 10%; margin-right: 10%;" @click="isShowModal = true">
+                <img class="icons"  src="../assets/img/trash.svg" alt="" @click="deleteContact(contact.id)">
+            </div>
+        </div> 
         
         <div v-if="isShowModal"> 
-            <EditContactModal @close-modal="isShowModal = false"  />
+            <EditContactModal @close-modal="isShowModal = false" />
         </div>
+
+        <vs-pagination 
+            v-model="currentPage" 
+            :total-pages="totalPages" 
+            @change="changePage"
+        />
     </div>
 </template>
 
@@ -43,6 +33,8 @@ export default {
     data() {
         return {
             isShowModal: false,
+            currentPage: 1,
+            perPage: 11
         }
     },
     mounted() {
@@ -52,16 +44,37 @@ export default {
         allContacts() {
             return this.$store.getters['allContacts']
         },
-        fitletedPhones() {
+        
+        filteredPhones() {
           return this.allContacts.filter(contact => contact.phone.includes(this.searchPhone))
-        }
+        },
+
+        totalPages() {
+            return Math.ceil(this.allContacts.length / this.perPage)
+        },
+
+         tasksOnPage() {
+            const startIndex = this.perPage * (this.currentPage - 1)
+            const endIndex = startIndex + this.perPage
+            if (this.searchPhone) {
+                return this.filteredPhones.slice(startIndex, endIndex)
+            } else {
+                return this.allContacts.slice(startIndex, endIndex)
+            }
+            
+        },
+       
     },
 
     methods: {
-        deleteContact(id = 5) {
+        deleteContact(id) {
             return this.$store.dispatch('deleteContact', id)
         },
-
+        changePage(page) {
+            console.log(page);
+            this.currentPage = page;
+        },
+        
         
 
     }
